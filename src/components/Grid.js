@@ -1,29 +1,26 @@
 import React from 'react';
 
-const START_TIMES = [
-  '7:30AM',
-  '8:00AM',
-  '8:30AM',
-  '9:00AM',
-  '9:30AM',
-  '10:00AM',
-  '10:30AM',
-  '11:00AM',
-  '11:30AM',
-  '12:00PM',
-  '12:30PM',
-  '1:00PM',
-  '1:30PM',
-  '2:00PM',
-  '3:00PM',
-  '4:00PM',
-  '4:30PM',
-  '5:00PM',
-  '5:30PM'
-];
-
+import { MONDAY } from '../seed';
 class Grid extends React.Component {
   render() {
+    let gridRows = MONDAY[0].map(() => []);
+
+    MONDAY.forEach(column => {
+      column.forEach((item, index) => {
+        gridRows[index].push(item);
+      });
+    });
+
+    const generatedGrid = gridRows.map(row => {
+      return (
+        <tr>
+          {row.map(value => {
+            return <td>{value}</td>;
+          })}
+        </tr>
+      );
+    });
+
     return (
       <table>
         <tr>
@@ -40,12 +37,7 @@ class Grid extends React.Component {
           <th>CMB</th>
           <th>Kerr</th>
         </tr>
-
-        {START_TIMES.map(startTime => (
-          <tr>
-            <td>{startTime}</td>
-          </tr>
-        ))}
+        {generatedGrid}
       </table>
     );
   }
