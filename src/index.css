@@ -6,6 +6,7 @@ body {
 
 .grid-table {
   border-collapse: collapse;
+  width: 100%;
 }
 
 .grid-table--border {
