@@ -53,13 +53,29 @@ class calendarGrid extends React.Component {
         </AppBar>
         {value === 0 && (
           <TabContainer>
-            <Grid />
+            <Grid day={value} />
           </TabContainer>
         )}
-        {value === 1 && <TabContainer>Tuesday</TabContainer>}
-        {value === 2 && <TabContainer>Wednesday</TabContainer>}
-        {value === 3 && <TabContainer>Thursday</TabContainer>}
-        {value === 4 && <TabContainer>Friday</TabContainer>}
+        {value === 1 && (
+          <TabContainer>
+            <Grid day={value} />
+          </TabContainer>
+        )}
+        {value === 2 && (
+          <TabContainer>
+            <Grid day={value} />
+          </TabContainer>
+        )}
+        {value === 3 && (
+          <TabContainer>
+            <Grid day={value} />
+          </TabContainer>
+        )}
+        {value === 4 && (
+          <TabContainer>
+            <Grid day={value} />
+          </TabContainer>
+        )}
       </div>
     );
   }

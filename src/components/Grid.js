@@ -1,11 +1,14 @@
 import React from 'react';
 
-import { MONDAY } from '../seed';
+import { MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY } from '../seed';
 class Grid extends React.Component {
   render() {
+    const daysTable = ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY'];
+    const DATA = { MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY };
+
     let gridRows = MONDAY[0].map(() => []);
 
-    MONDAY.forEach(column => {
+    DATA[daysTable[this.props.day]].forEach(column => {
       column.forEach((item, index) => {
         gridRows[index].push(item);
       });
