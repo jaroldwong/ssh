@@ -4,18 +4,18 @@ body {
   font-family: sans-serif;
 }
 
-table {
+.grid-table {
   border-collapse: collapse;
 }
 
-table, th, td {
+.grid-table--border {
   border: 1px solid black;
 }
 
-th {
+.grid-table__header--padding {
   padding: 16px;
 }
 
-td {
+.grid-table__cell--padding {
   padding: 8px;
 }

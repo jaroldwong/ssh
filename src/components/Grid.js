@@ -16,33 +16,33 @@ class Grid extends React.Component {
 
     const generatedGrid = gridRows.map(row => {
       return (
-        <tr>
+        <tr className="grid-table--border">
           {row.map(value => {
-            return <td>{value}</td>;
+            return <td className="grid-table--border grid-table__cell--padding">
+                {value}
+              </td>;
           })}
         </tr>
       );
     });
 
-    return (
-      <table>
-        <tr>
-          <th>Start</th>
-          <th>SSH</th>
-          <th>SSH</th>
-          <th>SSH</th>
-          <th>SSH</th>
-          <th>SSH</th>
-          <th>SSH</th>
-          <th>Young</th>
-          <th>Young</th>
-          <th>CMB</th>
-          <th>CMB</th>
-          <th>Kerr</th>
+    return <table className="grid-table">
+        <tr className="grid-table--border">
+          <th className="grid-table--border grid-table__header--padding">Start</th>
+          <th className="grid-table--border grid-table__header--padding">SSH</th>
+          <th className="grid-table--border grid-table__header--padding">SSH</th>
+          <th className="grid-table--border grid-table__header--padding">SSH</th>
+          <th className="grid-table--border grid-table__header--padding">SSH</th>
+          <th className="grid-table--border grid-table__header--padding">SSH</th>
+          <th className="grid-table--border grid-table__header--padding">SSH</th>
+          <th className="grid-table--border grid-table__header--padding">Young</th>
+          <th className="grid-table--border grid-table__header--padding">Young</th>
+          <th className="grid-table--border grid-table__header--padding">CMB</th>
+          <th className="grid-table--border grid-table__header--padding">CMB</th>
+          <th className="grid-table--border grid-table__header--padding">Kerr</th>
         </tr>
         {generatedGrid}
-      </table>
-    );
+      </table>;
   }
 }
 
