@@ -40,7 +40,6 @@ class calendarGrid extends React.Component {
       today -= 1;
       this.setState({value: today})
     }
-    debugger;
   }
 
   handleChange = (event, value) => {
