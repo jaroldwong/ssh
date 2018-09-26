@@ -32,6 +32,17 @@ class calendarGrid extends React.Component {
     value: 0
   };
 
+  componentDidMount() {
+    let today = new Date();
+    today = today.getDay(); // 0 = Sunday, 6 = Saturday
+
+    if (today > 0 && today < 6) {
+      today -= 1;
+      this.setState({value: today})
+    }
+    debugger;
+  }
+
   handleChange = (event, value) => {
     this.setState({ value });
   };
