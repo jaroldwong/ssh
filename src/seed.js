@@ -342,7 +342,7 @@ export const TUESDAY = [
     'William',
     'William',
     'William',
-    'William',
+    '',
     '',
     '',
     '',
