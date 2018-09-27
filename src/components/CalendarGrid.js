@@ -9,11 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import Grid from './Grid';
 
 function TabContainer(props) {
-  return (
-    <Typography component="div">
-      {props.children}
-    </Typography>
-  );
+  return <Typography component="div">{props.children}</Typography>;
 }
 
 TabContainer.propTypes = {
@@ -38,7 +34,7 @@ class calendarGrid extends React.Component {
 
     if (today > 0 && today < 6) {
       today -= 1;
-      this.setState({value: today})
+      this.setState({ value: today });
     }
   }
 
@@ -53,7 +49,7 @@ class calendarGrid extends React.Component {
     return (
       <div className={classes.root}>
         <AppBar position="static">
-          <Tabs value={value} onChange={this.handleChange}>
+          <Tabs centered value={value} onChange={this.handleChange}>
             <Tab label="Monday" />
             <Tab label="Tuesday" />
             <Tab label="Wednesday" />

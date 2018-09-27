@@ -10,10 +10,12 @@ class App extends Component {
     return (
       <div>
         <Navbar />
-        <Grid container justify='center' spacing={24} style={{ padding: 24 }}>
-          <Grid item xs={6}>
+        <Grid container justify="center" spacing={24} style={{ padding: 24 }}>
+          <Grid item xs={1} />
+          <Grid item xs={7}>
             <CalendarGrid />
           </Grid>
+          <Grid item xs={1} />
           <Grid item xs={3}>
             <SummaryCard />
           </Grid>
