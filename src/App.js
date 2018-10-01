@@ -11,6 +11,8 @@ import XLSX from 'xlsx';
 import * as data from './data.json';
 
 class App extends Component {
+  state = {};
+
   componentDidMount() {
     let URL = process.env.REACT_APP_URL;
     let TOKEN = process.env.REACT_APP_TOKEN;
@@ -44,7 +46,24 @@ class App extends Component {
 
       gridRows.push(currentGridRow);
     }
-    debugger;
+
+    let MONDAY = [];
+    let TUESDAY = [];
+    let WEDNESDAY = [];
+    let THURSDAY = [];
+    let FRIDAY = [];
+
+    gridRows.forEach(row => {
+      MONDAY.push(row.slice(0, 11));
+      TUESDAY.push(row.slice(12, 23));
+      WEDNESDAY.push(row.slice(24, 35));
+      THURSDAY.push(row.slice(36, 47));
+      FRIDAY.push(row.slice(48, 59));
+    });
+
+    this.setState(() => {
+      return { data: [MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY] };
+    });
   }
 
   render() {
@@ -54,7 +73,7 @@ class App extends Component {
         <Grid container justify="center" style={{ padding: 24 }}>
           <Grid item xs={1} />
           <Grid item xs={7}>
-            <CalendarGrid />
+            <CalendarGrid data={this.state.data} />
           </Grid>
           <Grid item xs={1} />
           <Grid item xs={3}>
