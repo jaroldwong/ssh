@@ -46,6 +46,14 @@ class calendarGrid extends React.Component {
     const { classes } = this.props;
     const { value } = this.state;
 
+    let tabContent = null;
+    if (this.props.data) {
+      tabContent = (
+        <TabContainer>
+          <Grid data={this.props.data[value]} />
+        </TabContainer>
+      );
+    }
     return (
       <div className={classes.root}>
         <AppBar position="static">
@@ -54,34 +62,10 @@ class calendarGrid extends React.Component {
             <Tab label="Tuesday" />
             <Tab label="Wednesday" />
             <Tab label="Thursday" />
-            <Tab label="Friday" href="#basic-tabs" />
+            <Tab label="Friday" />
           </Tabs>
         </AppBar>
-        {value === 0 && (
-          <TabContainer>
-            <Grid day={value} />
-          </TabContainer>
-        )}
-        {value === 1 && (
-          <TabContainer>
-            <Grid day={value} />
-          </TabContainer>
-        )}
-        {value === 2 && (
-          <TabContainer>
-            <Grid day={value} />
-          </TabContainer>
-        )}
-        {value === 3 && (
-          <TabContainer>
-            <Grid day={value} />
-          </TabContainer>
-        )}
-        {value === 4 && (
-          <TabContainer>
-            <Grid day={value} />
-          </TabContainer>
-        )}
+        {tabContent}
       </div>
     );
   }

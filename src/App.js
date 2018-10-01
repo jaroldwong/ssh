@@ -54,11 +54,11 @@ class App extends Component {
     let FRIDAY = [];
 
     gridRows.forEach(row => {
-      MONDAY.push(row.slice(0, 11));
-      TUESDAY.push(row.slice(12, 23));
-      WEDNESDAY.push(row.slice(24, 35));
-      THURSDAY.push(row.slice(36, 47));
-      FRIDAY.push(row.slice(48, 59));
+      MONDAY.push(row.slice(0, totalCol));
+      TUESDAY.push(row.slice(totalCol, totalCol * 2));
+      WEDNESDAY.push(row.slice(totalCol * 2, totalCol * 3));
+      THURSDAY.push(row.slice(totalCol * 3, totalCol * 4));
+      FRIDAY.push(row.slice(totalCol * 4, totalCol * 5));
     });
 
     this.setState(() => {
@@ -77,7 +77,7 @@ class App extends Component {
           </Grid>
           <Grid item xs={1} />
           <Grid item xs={3}>
-            <SummaryCard />
+            <SummaryCard data={this.state.data} />
           </Grid>
         </Grid>
       </div>

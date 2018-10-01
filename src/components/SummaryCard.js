@@ -11,8 +11,6 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
-import { MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY } from '../seed';
-
 import orderBy from 'lodash/orderBy';
 
 const styles = {
@@ -36,24 +34,22 @@ const styles = {
 function SummaryCard(props) {
   const { classes } = props;
 
-  const DATA = [MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY];
   let counter = {};
+  if (props.data) {
+    props.data.forEach(row => {
+      row.forEach((col, index) => {
+        col.forEach(value => {
+          if (value === '' || value.indexOf(':') > -1) return;
 
-  DATA.forEach(day => {
-    day.forEach((col, index) => {
-      if (index < 1) return;
-
-      col.forEach(value => {
-        if (value === '') return;
-
-        if (!counter[value]) {
-          counter[value] = 1;
-        } else {
-          counter[value] += 1;
-        }
+          if (!counter[value]) {
+            counter[value] = 1;
+          } else {
+            counter[value] += 1;
+          }
+        });
       });
     });
-  });
+  }
 
   let list = Object.keys(counter).map(name => ({ name: name, hours: counter[name] }));
   let sortedList = orderBy(list, ['hours', 'name'], ['desc', 'asc']);
