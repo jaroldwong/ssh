@@ -7,8 +7,7 @@ import { Grid } from '@material-ui/core';
 
 import axios from 'axios';
 import XLSX from 'xlsx';
-
-import * as data from './data.json';
+import firebase from './firebase.js';
 
 class App extends Component {
   state = {};
@@ -28,10 +27,14 @@ class App extends Component {
       console.log(JSON);
     });
 
-    this.generateGridFromJSON();
+    const dataRef = firebase.database().ref('data');
+    dataRef.on('value', snapshot => {
+      let data = snapshot.val();
+      this.generateGridFromJSON(data);
+    });
   }
 
-  generateGridFromJSON() {
+  generateGridFromJSON(data) {
     const jsonData = data; // array of Row objects
     const startingRow = 2;
     const endingRow = 22;
