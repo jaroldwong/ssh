@@ -13,42 +13,33 @@ class App extends Component {
   state = {};
 
   componentDidMount() {
-    let URL = process.env.REACT_APP_URL;
-    let TOKEN = process.env.REACT_APP_TOKEN;
+    let dbRef = firebase.database().ref('data');
 
     axios(URL, {
-      headers: { Authorization: `Bearer ${TOKEN}` },
       responseType: 'arraybuffer'
     }).then(res => {
-      let data = new Uint8Array(res.data);
-      let wb = XLSX.read(data, { type: 'array' });
-
-      let JSON = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { defval: '' });
+      const data = new Uint8Array(res.data);
+      const wb = XLSX.read(data, { type: 'array' });
+      const JSON = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { defval: '' });
       console.log(JSON);
+
+      // Grab values and discard extraneous rows
+      const startingRow = 2;
+      const endingRow = 23;
+      const values = JSON.map(obj => Object.values(obj));
+      const gridRows = values.slice(startingRow, endingRow);
+
+      dbRef.set(gridRows);
     });
 
-    const dataRef = firebase.database().ref('data');
-    dataRef.on('value', snapshot => {
+    dbRef.on('value', snapshot => {
       let data = snapshot.val();
       this.generateGridFromJSON(data);
     });
   }
 
   generateGridFromJSON(data) {
-    const jsonData = data; // array of Row objects
-    const startingRow = 2;
-    const endingRow = 22;
     const totalCol = 12;
-    const gridRows = [];
-
-    for (let row = startingRow; row <= endingRow; row++) {
-      let currentGridRow = [];
-      for (const key in jsonData[row]) {
-        currentGridRow.push(jsonData[row][key]);
-      }
-
-      gridRows.push(currentGridRow);
-    }
 
     let MONDAY = [];
     let TUESDAY = [];
@@ -56,7 +47,7 @@ class App extends Component {
     let THURSDAY = [];
     let FRIDAY = [];
 
-    gridRows.forEach(row => {
+    data.forEach(row => {
       MONDAY.push(row.slice(0, totalCol));
       TUESDAY.push(row.slice(totalCol, totalCol * 2));
       WEDNESDAY.push(row.slice(totalCol * 2, totalCol * 3));
