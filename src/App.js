@@ -5,7 +5,6 @@ import CalendarGrid from './components/CalendarGrid';
 import SummaryCard from './components/SummaryCard';
 import { Grid } from '@material-ui/core';
 
-import axios from 'axios';
 import XLSX from 'xlsx';
 import firebase from './firebase.js';
 
@@ -13,24 +12,7 @@ class App extends Component {
   state = {};
 
   componentDidMount() {
-    let dbRef = firebase.database().ref('data');
-
-    axios(URL, {
-      responseType: 'arraybuffer'
-    }).then(res => {
-      const data = new Uint8Array(res.data);
-      const wb = XLSX.read(data, { type: 'array' });
-      const JSON = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { defval: '' });
-      console.log(JSON);
-
-      // Grab values and discard extraneous rows
-      const startingRow = 2;
-      const endingRow = 23;
-      const values = JSON.map(obj => Object.values(obj));
-      const gridRows = values.slice(startingRow, endingRow);
-
-      dbRef.set(gridRows);
-    });
+    const dbRef = firebase.database().ref('data');
 
     dbRef.on('value', snapshot => {
       let data = snapshot.val();
@@ -60,10 +42,41 @@ class App extends Component {
     });
   }
 
+  handleFileSelect = event => {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+
+    reader.onload = function(e) {
+      const data = e.target.result;
+      const arrBuffer = new Uint8Array(data);
+      const wb = XLSX.read(arrBuffer, {
+        type: 'array'
+      });
+      const JSON = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { defval: '' });
+      console.log(JSON);
+
+      // Grab values and discard extraneous rows
+      const startingRow = 2;
+      const endingRow = 23;
+      const values = JSON.map(obj => Object.values(obj));
+      const gridRows = values.slice(startingRow, endingRow);
+
+      // Save to Firebase
+      firebase
+        .database()
+        .ref('data')
+        .set(gridRows);
+
+      window.location.reload();
+    };
+
+    reader.readAsArrayBuffer(file);
+  };
+
   render() {
     return (
       <div>
-        <Navbar />
+        <Navbar onFileSelect={this.handleFileSelect} />
         <Grid container justify="center" style={{ padding: 24 }}>
           <Grid item xs={1} />
           <Grid item xs={7}>
