@@ -21,7 +21,7 @@ class App extends Component {
   }
 
   generateGridFromJSON(data) {
-    const totalCol = 12;
+    const totalCol = 11;
 
     let MONDAY = [];
     let TUESDAY = [];

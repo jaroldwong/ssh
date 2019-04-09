@@ -21,7 +21,6 @@ class Grid extends React.Component {
           <th className="grid-table--border grid-table__header--padding">SSH</th>
           <th className="grid-table--border grid-table__header--padding">SSH</th>
           <th className="grid-table--border grid-table__header--padding">SSH</th>
-          <th className="grid-table--border grid-table__header--padding">SSH</th>
           <th className="grid-table--border grid-table__header--padding">Young</th>
           <th className="grid-table--border grid-table__header--padding">Young</th>
           <th className="grid-table--border grid-table__header--padding">CMB</th>
