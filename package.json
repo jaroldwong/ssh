@@ -2,7 +2,6 @@
   "name": "student-schedule",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://aws.d1z87ae5aho7ck.amplifyapp.com/student-schedule",
   "dependencies": {
     "@material-ui/core": "^3.1.1",
     "axios": "^0.18.0",
