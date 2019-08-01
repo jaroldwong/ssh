@@ -1,4 +1,5 @@
-Hosted on AWS S3 (Access restricted to UCD IP Addresses) - http://student-schedule.s3-website-us-east-1.amazonaws.com/
+Hosted on AWS S3 (Access restricted to UCD IP Addresses)
+- http://student-schedule.s3-website-us-east-1.amazonaws.com/
 
 ---
 
