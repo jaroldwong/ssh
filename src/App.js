@@ -6,18 +6,18 @@ import SummaryCard from './components/SummaryCard';
 import { Grid } from '@material-ui/core';
 
 import XLSX from 'xlsx';
-import firebase from './firebase.js';
+import axios from 'axios';
 
 class App extends Component {
   state = {};
 
   componentDidMount() {
-    const dbRef = firebase.database().ref('data');
-
-    dbRef.on('value', snapshot => {
-      let data = snapshot.val();
-      this.generateGridFromJSON(data);
-    });
+    var _this = this;
+    axios
+      .get('https://btwjpq291b.execute-api.us-west-1.amazonaws.com/default')
+      .then(function(res) {
+        _this.generateGridFromJSON(JSON.parse(res.data));
+      });
   }
 
   generateGridFromJSON(data) {
@@ -52,20 +52,28 @@ class App extends Component {
       const wb = XLSX.read(arrBuffer, {
         type: 'array'
       });
-      const JSON = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { defval: '' });
-      console.log(JSON);
+      const convertedData = XLSX.utils.sheet_to_json(
+        wb.Sheets[wb.SheetNames[0]],
+        {
+          defval: ''
+        }
+      );
 
       // Grab values and discard extraneous rows
       const startingRow = 2;
       const endingRow = 23;
-      const values = JSON.map(obj => Object.values(obj));
+      const values = convertedData.map(obj => Object.values(obj));
       const gridRows = values.slice(startingRow, endingRow);
 
-      // Save to Firebase
-      firebase
-        .database()
-        .ref('data')
-        .set(gridRows);
+      axios({
+        method: 'post',
+        url: 'https://btwjpq291b.execute-api.us-west-1.amazonaws.com/default',
+        data: JSON.stringify(gridRows),
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        }
+      });
 
       window.location.reload();
     };
