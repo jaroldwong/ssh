@@ -44,8 +44,6 @@ class App extends Component {
   }
 
   handleFileSelect = event => {
-    event.target.value = null;
-
     const _this = this;
     const file = event.target.files[0];
     const reader = new FileReader();
@@ -82,6 +80,7 @@ class App extends Component {
     };
 
     reader.readAsArrayBuffer(file);
+    event.target.value = null;
   };
 
   render() {
