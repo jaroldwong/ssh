@@ -13,6 +13,7 @@ class App extends Component {
 
   componentDidMount() {
     var _this = this;
+
     axios
       .get('https://btwjpq291b.execute-api.us-west-1.amazonaws.com/default')
       .then(function(res) {
@@ -43,6 +44,9 @@ class App extends Component {
   }
 
   handleFileSelect = event => {
+    event.target.value = null;
+
+    const _this = this;
     const file = event.target.files[0];
     const reader = new FileReader();
 
@@ -65,17 +69,16 @@ class App extends Component {
       const values = convertedData.map(obj => Object.values(obj));
       const gridRows = values.slice(startingRow, endingRow);
 
-      axios({
-        method: 'post',
-        url: 'https://btwjpq291b.execute-api.us-west-1.amazonaws.com/default',
-        data: JSON.stringify(gridRows),
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
-        }
-      });
-
-      window.location.reload();
+      axios
+        .post(
+          'https://btwjpq291b.execute-api.us-west-1.amazonaws.com/default',
+          JSON.stringify(gridRows)
+        )
+        .then(function(res) {
+          _this.setState(() => {
+            _this.generateGridFromJSON(gridRows);
+          });
+        });
     };
 
     reader.readAsArrayBuffer(file);
